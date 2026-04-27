@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.background },
   content: { flex: 1 },
   heroSection: { height: '50%', position: 'relative' },
-  heroImage: { width: '100%', height: '100%', resizeMode: 'cover' },
+  heroImage: { width: '100%', height: '100%' },
   heroOverlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(18, 18, 18, 0.5)',

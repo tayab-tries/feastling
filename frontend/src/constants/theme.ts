@@ -35,12 +35,14 @@ export const SHADOWS = {
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
-  },
+    boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+  } as any,
   button: {
     shadowColor: '#FF8F00',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 6,
-  },
+    boxShadow: '0 4px 8px rgba(255,143,0,0.3)',
+  } as any,
 };
