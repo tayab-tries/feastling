@@ -1,0 +1,109 @@
+{
+  "theme": "Dark",
+  "archetype": "5 (Jewel & Luxury) - Modified for Premium Food Delivery",
+  "colors": {
+    "background": "#121212",
+    "surface": "#1F1F1F",
+    "primary_accent": "#FF8F00",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#B0B0B0",
+    "borders": "rgba(255, 255, 255, 0.05)",
+    "success": "#22C55E",
+    "warning": "#F59E0B",
+    "error": "#EF4444"
+  },
+  "typography": {
+    "font_family_headings": "Outfit, sans-serif",
+    "font_family_body": "Plus Jakarta Sans, sans-serif",
+    "rules": {
+      "h1": "text-4xl sm:text-5xl font-bold tracking-tight text-white",
+      "h2": "text-2xl sm:text-3xl font-semibold tracking-tight text-white",
+      "h3": "text-xl sm:text-2xl font-medium text-white",
+      "body": "text-base text-[#B0B0B0]",
+      "small": "text-sm text-[#B0B0B0]"
+    }
+  },
+  "spacing_and_layout": {
+    "container_padding": "p-4 sm:p-6",
+    "card_padding": "p-4",
+    "gap": "gap-4 sm:gap-6",
+    "border_radius": {
+      "buttons": "rounded-2xl",
+      "cards": "rounded-3xl",
+      "inputs": "rounded-xl"
+    },
+    "mobile_first_rules": "Build entirely for mobile viewports (max-w-md mx-auto if viewed on desktop). Sticky bottom navigation is mandatory.",
+    "grid_bento": "Use dense packing for restaurant listings. Highlight featured restaurants with larger bento tiles spanning full width, and standard lists spanning half width."
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#FF8F00] text-white rounded-2xl py-4 px-6 font-semibold hover:bg-[#FF8F00]/90 transition-colors shadow-[0_8px_16px_rgba(255,143,0,0.3)] w-full flex justify-center items-center",
+      "secondary": "bg-[#1F1F1F] text-white rounded-2xl py-4 px-6 font-semibold border border-white/10 hover:bg-white/5 transition-colors w-full flex justify-center items-center"
+    },
+    "cards": {
+      "restaurant": "bg-[#1F1F1F] rounded-3xl overflow-hidden shadow-2xl border border-white/5 flex flex-col hover:-translate-y-1 transition-transform duration-300",
+      "cart_group": "bg-black/40 rounded-3xl p-5 border border-white/10 space-y-4 mb-4"
+    },
+    "inputs": {
+      "search": "w-full bg-[#1F1F1F] text-white placeholder-[#B0B0B0] rounded-2xl py-4 px-5 border border-white/5 focus:border-[#FF8F00] focus:ring-1 focus:ring-[#FF8F00] transition-all outline-none"
+    },
+    "navigation": {
+      "bottom_tab": "fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#121212]/85 backdrop-blur-2xl border-t border-white/10 p-4 pb-8 flex justify-around items-center z-50"
+    },
+    "badges": {
+      "rating": "bg-[#FF8F00]/20 text-[#FF8F00] px-2 py-1 rounded-lg text-xs font-bold flex items-center gap-1 backdrop-blur-md"
+    }
+  },
+  "motion_and_interactions": {
+    "hover_states": "Cards lift slightly (-translate-y-1). Buttons scale down slightly on active (active:scale-95).",
+    "page_transitions": "Fade in and slide up (translate-y-4 to 0) for new screens.",
+    "cart_interactions": "Swiping items in cart, micro-animations when adding to cart."
+  },
+  "icons_and_assets": {
+    "icon_library": "lucide-react",
+    "instructions": "Use lucide-react icons with stroke-width 2. Keep icons minimal and crisp. Ensure you install via 'yarn add lucide-react'."
+  },
+  "media": {
+    "image_urls": [
+      {
+        "url": "https://images.pexels.com/photos/12325012/pexels-photo-12325012.jpeg",
+        "category": "hero_restaurant",
+        "description": "Gourmet burger for featured restaurant banner"
+      },
+      {
+        "url": "https://images.pexels.com/photos/14935009/pexels-photo-14935009.jpeg",
+        "category": "category_burgers",
+        "description": "Burger category image"
+      },
+      {
+        "url": "https://images.pexels.com/photos/12096782/pexels-photo-12096782.jpeg",
+        "category": "hero_restaurant_2",
+        "description": "Neapolitan pizza for popular restaurant card"
+      },
+      {
+        "url": "https://images.pexels.com/photos/35760009/pexels-photo-35760009.jpeg",
+        "category": "category_pizza",
+        "description": "Pizza baking for category"
+      },
+      {
+        "url": "https://images.pexels.com/photos/31286785/pexels-photo-31286785.jpeg",
+        "category": "hero_restaurant_3",
+        "description": "Artistic salmon sushi for luxury dining card"
+      },
+      {
+        "url": "https://images.pexels.com/photos/36072048/pexels-photo-36072048.jpeg",
+        "category": "driver_tracking",
+        "description": "Driver on motorbike at night for driver tracking screen backdrop or profile"
+      }
+    ]
+  },
+  "specific_screen_rules": {
+    "multi_restaurant_cart": "CORE INNOVATION. Visually separate orders by restaurant. Use a nested bento-grid approach where each restaurant is a main '#1F1F1F' container, and items inside are '#121212' rows with image on the left. Have a fixed bottom glassmorphic bar with total price and '#FF8F00' checkout button.",
+    "driver_tracking": "Since we can't implement a real map easily, mock the map UI with a dark gray background grid and a glowing orange (#FF8F00) route line (using SVG). Overlay the driver detail card at the bottom.",
+    "splash_screen": "Keep it strictly minimal. Center the logo with an animated glow using #FF8F00. Background must be #121212.",
+    "order_tracking": "Use a vertical timeline/stepper component. Active stage in #FF8F00, inactive in #1F1F1F. Include timestamps on the right."
+  },
+  "testing": {
+    "instructions": "All interactive and key informational elements MUST include a data-testid attribute in kebab-case (e.g., data-testid='place-order-btn')."
+  }
+}
