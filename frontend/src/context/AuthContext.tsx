@@ -26,6 +26,36 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const useAuth = () => useContext(AuthContext);
 
+// On web: use relative URL so same-origin requests work with cookies
+// On native: use full BACKEND_URL with Authorization header
+function getApiUrl(path: string): string {
+  if (Platform.OS === 'web' && typeof window !== 'undefined') {
+    return path; // relative URL → same origin → cookies work
+  }
+  return `${BACKEND_URL}${path}`;
+}
+
+async function authFetch(path: string, options: RequestInit = {}) {
+  const url = getApiUrl(path);
+  const token = await AsyncStorage.getItem('session_token');
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    ...(options.headers as Record<string, string> || {}),
+  };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  // On web with same-origin, include credentials so cookies are sent
+  const useCredentials = Platform.OS === 'web';
+
+  return fetch(url, {
+    ...options,
+    headers,
+    ...(useCredentials ? { credentials: 'include' as RequestCredentials } : {}),
+  });
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,11 +64,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const processSessionId = useCallback(async (sessionId: string) => {
     try {
-      const response = await fetch(`${BACKEND_URL}/api/auth/session`, {
+      const url = getApiUrl('/api/auth/session');
+      const response = await fetch(url, {
         method: 'POST',
-        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ session_id: sessionId }),
+        ...(Platform.OS === 'web' ? { credentials: 'include' as RequestCredentials } : {}),
       });
 
       if (response.ok) {
@@ -67,16 +98,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
 
-      const token = await AsyncStorage.getItem('session_token');
-      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-
-      const response = await fetch(`${BACKEND_URL}/api/auth/me`, {
-        credentials: 'include',
-        headers,
-      });
+      const response = await authFetch('/api/auth/me');
 
       if (response.ok) {
         const userData = await response.json();
@@ -116,16 +138,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = useCallback(async () => {
     try {
-      const token = await AsyncStorage.getItem('session_token');
-      const headers: Record<string, string> = {};
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-      await fetch(`${BACKEND_URL}/api/auth/logout`, {
-        method: 'POST',
-        credentials: 'include',
-        headers,
-      });
+      await authFetch('/api/auth/logout', { method: 'POST' });
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
